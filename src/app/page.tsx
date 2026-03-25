@@ -50,12 +50,13 @@ export default async function HomePage() {
                   border: "2px solid #171717",
                   padding: 16,
                   borderRadius: 8,
+                  position: "relative",
                 }}
               >
                 <Link href={`/entries/${entry.slug}`}>
                   <strong>{entry.title}</strong>
                 </Link>
-                <Link href={`/entries/edit/${entry.slug}`}>
+                <Link href={`/entries/edit/${entry.slug}`} className="card">
                 <img src="edit.png" className="edit-icon" />
                 </Link>
                 <div>{entry.status}</div>
@@ -81,12 +82,13 @@ export default async function HomePage() {
                   border: "2px solid #171717",
                   padding: 16,
                   borderRadius: 8,
+                  position: "relative",
                 }}
               >
                 <Link href={`/entries/${entry.slug}`}>
                   <strong>{entry.title}</strong>
                 </Link>
-                <Link href={`/entries/edit/${entry.slug}`}>
+                <Link href={`/entries/edit/${entry.slug}`} className="card">
                   <img src="edit.png" className="edit-icon" />
                 </Link>
                 <div>{entry.status}</div>
