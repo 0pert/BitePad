@@ -17,21 +17,35 @@ export async function saveEntry(input: CreateEntryInput): Promise<Entry> {
 
   const created = today();
   const updated = today();
+
   console.log(parsed)
-  const frontmatter = {
+  let frontmatter = {}
+  if (parsed.type == "idea") {
+    frontmatter = {
+    title: parsed.title,
+    type: parsed.type,
+    status: parsed.status,
+    tags: parsed.tags,
+    created,
+    updated,
+  };
+  } else {
+    frontmatter = {
     title: parsed.title,
     type: parsed.type,
     status: parsed.status,
     tags: parsed.tags,
     mainIngredients: parsed.mainIngredients || "",
-    cuisine: parsed.cuisine,
-    timeMinutes: parsed.timeMinutes,
+    cuisine: parsed.cuisine || "",
+    timeMinutes: parsed.timeMinutes || 0,
     // difficulty: parsed.difficulty,
     // rating: parsed.rating,
     // source: parsed.source,
     created,
     updated,
   };
+  }
+  
   console.log(frontmatter)
 
   const fileContents = matter.stringify(parsed.body.trim(), frontmatter);
