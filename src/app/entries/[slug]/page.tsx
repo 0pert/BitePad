@@ -11,7 +11,7 @@ type Props = {
 
 export default async function EntryPage({ params }: Props) {
   const { slug } = await params;
-  console.log(slug);
+
   const entry = await loadEntryBySlug(slug);
 
   if (!entry) notFound();

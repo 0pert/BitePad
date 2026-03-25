@@ -29,7 +29,7 @@ export const createEntryInputSchema = z.object({
   type: entryTypeSchema,
   status: entryStatusSchema.default("saved"),
   tags: z.array(z.string()).default([]),
-  mainIngredients: z.array(z.string()).default([]),
+  mainIngredients: z.array(z.string()).default([]).optional(),
   cuisine: z.string().optional(),
   timeMinutes: z.number().int().nonnegative().optional(),
   difficulty: z.enum(["easy", "medium", "hard"]).optional(),
