@@ -13,10 +13,18 @@ export default async function HomePage() {
     .sort((a, b) => a.title.localeCompare(b.title));
 
   return (
-    <main style={{ padding: 24, maxWidth: 500, width: "100%", margin: "0 auto" }}>
-      
+    <main
+      style={{ padding: 24, maxWidth: 500, width: "100%", margin: "0 auto" }}
+    >
       {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 24,
+        }}
+      >
         <Link href="/entries/new">
           <img src="BitePad.png" style={{ height: 50, padding: 5 }} />
         </Link>
@@ -29,17 +37,31 @@ export default async function HomePage() {
 
       {/* Two columns */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
-        
         {/* Recipes */}
         <div>
           <h2>Recipes:</h2>
-          <ul style={{ listStyle: "none", padding: 0, display: "grid", gap: 12 }}>
+          <ul
+            style={{ listStyle: "none", padding: 0, display: "grid", gap: 12 }}
+          >
             {recipes.map((entry) => (
-              <li key={entry.slug} style={{ border: "2px solid #171717", padding: 16, borderRadius: 8 }}>
+              <li
+                key={entry.slug}
+                style={{
+                  border: "2px solid #171717",
+                  padding: 16,
+                  borderRadius: 8,
+                }}
+              >
                 <Link href={`/entries/${entry.slug}`}>
                   <strong>{entry.title}</strong>
                 </Link>
+                <Link href={`/entries/edit/${entry.slug}`}>
+                <img src="edit.png" className="edit-icon" />
+                </Link>
                 <div>{entry.status}</div>
+                <div>
+                  <i>{entry.tags.join(" · ")}</i>
+                </div>
                 {entry.timeMinutes ? <div>{entry.timeMinutes} min</div> : null}
               </li>
             ))}
@@ -49,19 +71,32 @@ export default async function HomePage() {
         {/* Ideas */}
         <div>
           <h2>Ideas:</h2>
-          <ul style={{ listStyle: "none", padding: 0, display: "grid", gap: 12 }}>
+          <ul
+            style={{ listStyle: "none", padding: 0, display: "grid", gap: 12 }}
+          >
             {ideas.map((entry) => (
-              <li key={entry.slug} style={{ border: "2px solid #171717", padding: 16, borderRadius: 8 }}>
+              <li
+                key={entry.slug}
+                style={{
+                  border: "2px solid #171717",
+                  padding: 16,
+                  borderRadius: 8,
+                }}
+              >
                 <Link href={`/entries/${entry.slug}`}>
                   <strong>{entry.title}</strong>
                 </Link>
+                <Link href={`/entries/edit/${entry.slug}`}>
+                  <img src="edit.png" className="edit-icon" />
+                </Link>
                 <div>{entry.status}</div>
-                <div>{entry.tags.join(", ")}</div>
+                <div>
+                  <i>{entry.tags.join(" · ")}</i>
+                </div>
               </li>
             ))}
           </ul>
         </div>
-
       </div>
     </main>
   );
