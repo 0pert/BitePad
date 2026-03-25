@@ -10,7 +10,8 @@ tags:
 mainIngredients:
   - salladskål
   - gochugaru
-time_minutes: 120
+cuisine: Asien
+timeMinutes: 0
 difficulty: easy
 rating: 5
 created: 2026-03-23
@@ -38,7 +39,7 @@ updated: 2026-03-23
 
 1. Krama in saltet (2-3 % av den totala vikten) i kål, morot, rättika och låt stå ca 2 timmar.
 2. Koka upp vatten, socker och rismjöl.
-3. Mixa gullök, vitlök, päron, gochugaru, fisksås, ingefära till en paste.
+3. Mixa gullök, vitlök, päron, gochugaru, fisksås, ingefära till en paste med vattnet från föregående steg.
 4. Blanda ihop de saltade grönsakerna med pasten, salladslöken och pressa ner i en ren glasburk.
 
 # Anteckningar
