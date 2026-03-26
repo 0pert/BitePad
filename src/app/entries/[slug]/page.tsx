@@ -9,6 +9,7 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
+
 export default async function EntryPage({ params }: Props) {
   const { slug } = await params;
 
@@ -36,6 +37,9 @@ export default async function EntryPage({ params }: Props) {
           <Link href={`/entries/edit/${entry.slug}`}>
             <img src="../../edit.png" className="edit-icon" />
           </Link>
+
+          
+
         </div>
         <div>
           <h1 style={{ fontSize: 30 }}>{entry.title}</h1>

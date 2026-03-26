@@ -22,7 +22,6 @@ type EntryFormProps = {
 };
 
 export default function EntryForm({ initialData, mode }: EntryFormProps) {
-
   const router = useRouter();
 
   const [title, setTitle] = useState(initialData?.title ?? "");
@@ -30,11 +29,37 @@ export default function EntryForm({ initialData, mode }: EntryFormProps) {
   const [type, setType] = useState(initialData?.type ?? "recipe");
   const [status, setStatus] = useState(initialData?.status ?? "saved");
   const [tags, setTags] = useState(initialData?.tags?.join(", ") ?? "");
-  const [mainIngredients, setMainIngredients] = useState(initialData?.mainIngredients?.join(", ") ?? "");
-  const [timeMinutes, setTimeMinutes] = useState(initialData?.timeMinutes ?? "");
+  const [mainIngredients, setMainIngredients] = useState(
+    initialData?.mainIngredients?.join(", ") ?? "",
+  );
+  const [timeMinutes, setTimeMinutes] = useState(
+    initialData?.timeMinutes ?? "",
+  );
   const [cuisine, setCuisine] = useState(initialData?.cuisine ?? "");
   const [body, setBody] = useState(initialData?.body ?? "");
   const [saving, setSaving] = useState(false);
+
+  async function deleteAction() {
+    if (saving) return;
+    const confirmed = window.confirm(
+      `Delete "${title}"? This cannot be undone.`,
+    );
+    if (!confirmed) return;
+
+    const res = await fetch("/api/entries", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        type,
+        slug,
+      }),
+    });
+    if (!res.ok) {
+      alert("Could not delete entry");
+      return;
+    }
+    router.push(`/`);
+  }
 
   async function onSubmit(e: React.SubmitEvent) {
     e.preventDefault();
@@ -77,17 +102,23 @@ export default function EntryForm({ initialData, mode }: EntryFormProps) {
 
   return (
     <main style={{ padding: 12, width: "100%", margin: "0 auto" }}>
-      
-      <div style={{ display: "flex", alignContent:"space-between", alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          alignContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <div>
-        <Link href="/">
-          <img src="../../left-arrow.png" className="left-arrow" />
-        </Link><br/>
+          <Link href="/">
+            <img src="../../left-arrow.png" className="left-arrow" />
+          </Link>
         </div>
         <div>
-
           {/* <h1 style={{ fontSize: 30 }}>New Entry</h1> */}
-          <h1 style={{ fontSize: 30 }}>{mode === "new" ? "New entry" : "Edit entry"}</h1>
+          <h1 style={{ fontSize: 30 }}>
+            {mode === "new" ? "New entry" : "Edit entry"}
+          </h1>
         </div>
       </div>
 
@@ -164,9 +195,25 @@ export default function EntryForm({ initialData, mode }: EntryFormProps) {
           className="editor"
         />
 
-        <button type="submit" disabled={saving}>
-          {saving ? "Saving..." : "Save"}
-        </button>
+
+        <div className={mode == "edit" ? "grid grid-cols-2 gap-2" : "grid items-center" }>
+          <button
+            type="submit"
+            disabled={saving}
+            className="bg-orange-600 hover:bg-orange-700 text-black font-bold py-2 px-4 rounded-full"
+          >
+            {saving ? "Saving..." : "Save"}
+          </button>
+          {mode == "edit" && (
+            <button
+              type="button"
+              onClick={deleteAction}
+              className="bg-red-500 hover:bg-red-700 text-black font-bold py-2 px-4 rounded-full"
+            >
+              Delete
+            </button>
+          )}
+        </div>
       </form>
     </main>
   );
