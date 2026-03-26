@@ -11,7 +11,12 @@ function today() {
 
 export async function saveEntry(input: CreateEntryInput): Promise<Entry> {
   const parsed = createEntryInputSchema.parse(input);
-  const slug = makeSlug(parsed.title);
+  let slug = null
+  if (!parsed.slug) {
+    slug = makeSlug(parsed.title);
+  } else {
+    slug = makeSlug(parsed.slug);
+  }
   const dir = getDirForType(parsed.type);
   const filePath = path.join(dir, `${slug}.md`);
 

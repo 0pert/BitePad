@@ -27,6 +27,7 @@ export const entrySchema = entryFrontmatterSchema.extend({
 export const createEntryInputSchema = z.object({
   title: z.string().min(1),
   type: entryTypeSchema,
+  slug: z.string(),
   status: entryStatusSchema.default("saved"),
   tags: z.array(z.string()).default([]),
   mainIngredients: z.array(z.string()).default([]).optional(),

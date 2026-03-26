@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { loadEntries } from "@/lib/content/loadEntries";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const entries = await loadEntries();
 

@@ -26,6 +26,7 @@ export default function EntryForm({ initialData, mode }: EntryFormProps) {
   const router = useRouter();
 
   const [title, setTitle] = useState(initialData?.title ?? "");
+  const [slug, setSlug] = useState(initialData?.slug ?? "");
   const [type, setType] = useState(initialData?.type ?? "recipe");
   const [status, setStatus] = useState(initialData?.status ?? "saved");
   const [tags, setTags] = useState(initialData?.tags?.join(", ") ?? "");
@@ -35,7 +36,7 @@ export default function EntryForm({ initialData, mode }: EntryFormProps) {
   const [body, setBody] = useState(initialData?.body ?? "");
   const [saving, setSaving] = useState(false);
 
-  async function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.SubmitEvent) {
     e.preventDefault();
     setSaving(true);
 
@@ -44,6 +45,7 @@ export default function EntryForm({ initialData, mode }: EntryFormProps) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         title,
+        slug,
         type,
         status,
         tags: tags
