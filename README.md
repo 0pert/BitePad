@@ -1,3 +1,63 @@
+# BitePad
+
+### Clone repo:
+```
+cd /var/www
+git clone https://github.com/0pert/BitePad.git
+cd BitePad
+npm install
+```
+
+### Run server
+Start dev server:
+```bash
+npm run dev
+```
+### Production
+Build project for prod:
+```bash
+npm run build
+```
+Start prod server
+```bash
+npm start
+```
+
+### Run as a daemon
+
+```
+sudo nano /etc/systemd/system/bitepad.service
+```
+/etc/systemd/system/bitepad.service:
+```
+[Unit]
+Description=BitePad
+After=network.target
+
+[Service]
+Type=simple
+User={USERNAME}
+WorkingDirectory=/var/www/BitePad
+Environment=NODE_ENV=production
+Environment=PORT=3030
+ExecStart={PATH TO NODE BINARY} /var/www/BitePad/node_modules/next/dist/bin/next start -p 3030
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```
+sudo systemctl daemon-reload
+sudo systemctl start bitepad
+sudo systemctl enable bitepad
+```
+
+
+--- 
+# Nextjs
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
