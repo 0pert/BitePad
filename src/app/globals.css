@@ -57,6 +57,13 @@ body {
 }
 
 .edit-icon {
+  width: 30px;
+  position: absolute;
+  top: 40px;
+  right: 20px;
+}
+
+.edit-icon-card {
   width: 20px;
 }
 .card {

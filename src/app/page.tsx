@@ -59,7 +59,7 @@ export default async function HomePage() {
                   <strong>{entry.title}</strong>
                 </Link>
                 <Link href={`/entries/edit/${entry.slug}`} className="card">
-                <img src="edit.png" className="edit-icon" />
+                <img src="edit.png" className="edit-icon-card" />
                 </Link>
                 <div>{entry.status}</div>
                 <div>
@@ -91,7 +91,7 @@ export default async function HomePage() {
                   <strong>{entry.title}</strong>
                 </Link>
                 <Link href={`/entries/edit/${entry.slug}`} className="card">
-                  <img src="edit.png" className="edit-icon" />
+                  <img src="edit.png" className="edit-icon-card" />
                 </Link>
                 <div>{entry.status}</div>
                 <div>

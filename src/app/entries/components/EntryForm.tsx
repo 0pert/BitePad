@@ -41,9 +41,7 @@ export default function EntryForm({ initialData, mode }: EntryFormProps) {
 
   async function deleteAction() {
     if (saving) return;
-    const confirmed = window.confirm(
-      `Delete "${title}"? This cannot be undone.`,
-    );
+    const confirmed = window.confirm(`Delete "${title}"?`);
     if (!confirmed) return;
 
     const res = await fetch("/api/entries", {
@@ -124,79 +122,94 @@ export default function EntryForm({ initialData, mode }: EntryFormProps) {
 
       <form
         onSubmit={onSubmit}
-        style={{ display: "grid", gap: 12, border: "2px solid #171717" }}
+        className="grid grid-cols-[120px_1fr] gap-2 border-2 border-[#171717] p-2"
       >
         {/* style={{ border: "2px solid #171717" }} */}
+        <label>Title</label>
         <input
-          placeholder="Title"
+        placeholder="Pasta carbonara"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          className="border border-[#171717]"
         />
 
+        <label>Type</label>
         <select
           value={type}
           onChange={(e) => setType(e.target.value as "recipe" | "idea")}
-          style={{ borderTop: "1px solid #171717" }}
+          className="border border-[#171717]"
         >
           <option value="recipe">recipe</option>
           <option value="idea">idea</option>
         </select>
-
+        <label>Status</label>
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          style={{ borderTop: "1px solid #171717" }}
+          className="border border-[#171717]"
         >
           <option value="idea">idea</option>
           <option value="saved">saved</option>
           <option value="tested">tested</option>
           <option value="favorite">favorite</option>
         </select>
-
+        <label>Tags</label>
         <input
-          placeholder="Tags, comma-separated"
+          key={"tags"}
+          placeholder="pasta, huvudrätt"
           value={tags}
           onChange={(e) => setTags(e.target.value)}
-          style={{ borderTop: "1px solid #171717" }}
+          className="border border-[#171717]"
         />
 
-        {type == "recipe" && (
-          <input
-            placeholder="Cuisine"
-            value={cuisine}
-            onChange={(e) => setCuisine(e.target.value)}
-            style={{ borderTop: "1px solid #171717" }}
-          />
+        {type === "recipe" && (
+          <>
+            <label>Cuisine</label>
+            <input
+              placeholder="Italien"
+              value={cuisine}
+              onChange={(e) => setCuisine(e.target.value)}
+              className="border border-[#171717]"
+            />
+          </>
         )}
 
         {type == "recipe" && (
-          <input
-            placeholder="Main ingredients, comma-separated"
-            value={mainIngredients}
-            onChange={(e) => setMainIngredients(e.target.value)}
-            style={{ borderTop: "1px solid #171717" }}
-          />
+          <>
+            <label>Main ingredients</label>
+            <input
+              placeholder="pasta, guanciale"
+              value={mainIngredients}
+              onChange={(e) => setMainIngredients(e.target.value)}
+              className="border border-[#171717]"
+            />
+          </>
         )}
 
         {type == "recipe" && (
-          <input
-            placeholder="Time in minutes"
-            value={timeMinutes}
-            onChange={(e) => setTimeMinutes(e.target.value)}
-            style={{ borderTop: "1px solid #171717" }}
-          />
+          <>
+            <label>Time in minutes</label>
+            <input
+              placeholder="45"
+              value={timeMinutes}
+              onChange={(e) => setTimeMinutes(e.target.value)}
+              className="border border-[#171717]"
+            />
+          </>
         )}
 
         <textarea
-          placeholder="# Ingredients:"
           rows={18}
           value={body}
           onChange={(e) => setBody(e.target.value)}
-          className="editor"
+          className="editor col-span-2"
         />
 
-
-        <div className={mode == "edit" ? "grid grid-cols-2 gap-2" : "grid items-center" }>
+        <div
+          className={
+            mode == "edit" ? "col-span-2 grid grid-cols-2 gap-2" : "grid col-span-2"
+          }
+        >
           <button
             type="submit"
             disabled={saving}
