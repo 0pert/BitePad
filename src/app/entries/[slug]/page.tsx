@@ -20,7 +20,7 @@ export default async function EntryPage({ params }: Props) {
 
   return (
     <main
-      style={{ padding: 12, width: "100%", maxWidth: 900, margin: "0 auto" }}
+      style={{ padding: 12, width: "100%", maxWidth: 900, margin: "0 auto", borderLeft: "solid 2px" }}
     >
       <div
         style={{
