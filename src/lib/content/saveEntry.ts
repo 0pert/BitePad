@@ -38,6 +38,7 @@ export async function saveEntry(input: CreateEntryInput): Promise<Entry> {
       title: parsed.title,
       type: parsed.type,
       status: parsed.status,
+      fav: parsed.fav,
       tags: parsed.tags,
       mainIngredients: parsed.mainIngredients || "",
       cuisine: parsed.cuisine || "",

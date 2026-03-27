@@ -71,3 +71,10 @@ body {
   top: 5px;
   right: 5px;
 }
+
+.favorite-icon-card {
+  position: absolute;
+  width: 15px;
+  top: 30px;
+  right: 5px;
+}

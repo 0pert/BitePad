@@ -1,7 +1,8 @@
 ---
 title: Kimchi
 type: recipe
-status: favorite
+status: saved
+fav: true
 tags:
   - koreanskt
   - tillbehör
@@ -12,12 +13,9 @@ mainIngredients:
   - gochugaru
 cuisine: Asien
 timeMinutes: 0
-difficulty: easy
-rating: 5
-created: 2026-03-23
-updated: 2026-03-23
+created: '2026-03-27'
+updated: '2026-03-27'
 ---
-
 # Ingredienser
 
 - 2 kg salladskål

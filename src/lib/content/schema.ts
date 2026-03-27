@@ -1,13 +1,14 @@
 import { z } from "zod";
 
 export const entryTypeSchema = z.enum(["recipe", "idea"]);
-export const entryStatusSchema = z.enum(["idea", "saved", "tested", "favorite"]);
+export const entryStatusSchema = z.enum(["idea", "saved", "tested", "not tested"]);
 export const difficultySchema = z.enum(["easy", "medium", "hard"]).optional();
 
 export const entryFrontmatterSchema = z.object({
   title: z.string().min(1),
   type: entryTypeSchema,
   status: entryStatusSchema,
+  fav: z.boolean().optional(),
   tags: z.array(z.string()).default([]),
   mainIngredients: z.array(z.string()).default([]),
   cuisine: z.string().optional(),
@@ -29,6 +30,7 @@ export const createEntryInputSchema = z.object({
   type: entryTypeSchema,
   slug: z.string(),
   status: entryStatusSchema.default("saved"),
+  fav: z.boolean(),
   tags: z.array(z.string()).default([]),
   mainIngredients: z.array(z.string()).default([]).optional(),
   cuisine: z.string().optional(),

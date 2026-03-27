@@ -10,6 +10,7 @@ type Entry = {
   cuisine?: string;
   type?: string;
   status?: string;
+  fav?: boolean;
   body?: string;
   timeMinutes?: number;
   tags?: string[];
@@ -31,7 +32,7 @@ const example = `## Ingredienser
 
 ### Anteckningar
 
-`
+`;
 
 export default function EntryForm({ initialData, mode }: EntryFormProps) {
   const router = useRouter();
@@ -39,6 +40,7 @@ export default function EntryForm({ initialData, mode }: EntryFormProps) {
   const [title, setTitle] = useState(initialData?.title ?? "");
   const [slug, setSlug] = useState(initialData?.slug ?? "");
   const [type, setType] = useState(initialData?.type ?? "recipe");
+  const [fav, setfav] = useState(initialData?.fav ?? false);
   const [status, setStatus] = useState(initialData?.status ?? "saved");
   const [tags, setTags] = useState(initialData?.tags?.join(", ") ?? "");
   const [mainIngredients, setMainIngredients] = useState(
@@ -84,6 +86,7 @@ export default function EntryForm({ initialData, mode }: EntryFormProps) {
         slug,
         type,
         status,
+        fav,
         tags: tags
           .split(",")
           .map((x) => x.trim().toLowerCase())
@@ -140,7 +143,7 @@ export default function EntryForm({ initialData, mode }: EntryFormProps) {
         {/* style={{ border: "2px solid #171717" }} */}
         <label>Title</label>
         <input
-        placeholder="Pasta carbonara"
+          placeholder="Pasta carbonara"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           className="border border-[#171717]"
@@ -164,7 +167,7 @@ export default function EntryForm({ initialData, mode }: EntryFormProps) {
           <option value="idea">idea</option>
           <option value="saved">saved</option>
           <option value="tested">tested</option>
-          <option value="favorite">favorite</option>
+          <option value="favorite">not tested</option>
         </select>
         <label>Tags</label>
         <input
@@ -211,6 +214,18 @@ export default function EntryForm({ initialData, mode }: EntryFormProps) {
           </>
         )}
 
+        {type == "recipe" && (
+          <>
+            <label>Favorite</label>
+            <input
+              type="checkbox"
+              checked={fav}
+              onChange={(e) => setfav(e.target.checked)}
+              className="shrink-0 size-4 bg-transparent border-line-3 rounded-sm shadow-2xs text-primary focus:ring-0 focus:ring-offset-0 checked:bg-primary-checked checked:border-primary-checked disabled:opacity-50 disabled:pointer-events-none"
+            />
+          </>
+        )}
+
         <textarea
           rows={18}
           value={body}
@@ -220,7 +235,9 @@ export default function EntryForm({ initialData, mode }: EntryFormProps) {
 
         <div
           className={
-            mode == "edit" ? "col-span-2 grid grid-cols-2 gap-2" : "grid col-span-2"
+            mode == "edit"
+              ? "col-span-2 grid grid-cols-2 gap-2"
+              : "grid col-span-2"
           }
         >
           <button

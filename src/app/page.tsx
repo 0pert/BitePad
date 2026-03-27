@@ -11,6 +11,7 @@ interface Entry {
   title: string;
   slug: string;
   status: string;
+  fav: boolean;
   tags: string[];
   timeMinutes?: number;
 }
@@ -34,7 +35,7 @@ export default function HomePage() {
       entry.title.toLowerCase().includes(query) ||
       entry.tags.some((tag) => tag.toLowerCase().includes(query));
 
-    const matchesFavorite = !favoritesOnly || entry.status === "favorite";
+    const matchesFavorite = !favoritesOnly || entry.fav;
 
     return matchesSearch && matchesFavorite;
   });
@@ -70,17 +71,20 @@ export default function HomePage() {
           style={{ border: "1px solid #171717", padding: 6, width: "70%" }}
         />
 
-        
-        <input
-          type="checkbox"
-          checked={favoritesOnly}
-          onChange={(e) => setFavoritesOnly(e.target.checked)}
-          className="shrink-0 size-4 bg-transparent border-line-3 rounded-sm shadow-2xs text-primary focus:ring-0 focus:ring-offset-0 checked:bg-primary-checked checked:border-primary-checked disabled:opacity-50 disabled:pointer-events-none"
-        />
-        <label>
-        <img src="favorite.png" style={{ height: 30, paddingLeft: 5 }} />
+        <label
+          style={{ cursor: "pointer", display: "flex", alignItems: "center" }}
+        >
+          <input
+            type="checkbox"
+            checked={favoritesOnly}
+            onChange={(e) => setFavoritesOnly(e.target.checked)}
+            style={{ display: "none" }}
+          />
+          <img
+            src={favoritesOnly ? "fav-filled.png" : "fav.png"}
+            style={{ height: 30 }}
+          />
         </label>
- 
       </div>
 
       {/* Two columns */}
@@ -107,11 +111,15 @@ export default function HomePage() {
                 <Link href={`/entries/edit/${entry.slug}`} className="card">
                   <img src="edit.png" className="edit-icon-card" />
                 </Link>
-                <div>{entry.status}</div>
+
+                {entry.fav && (
+                  <img src="fav-filled.png" className="favorite-icon-card" />
+                )}
+                {/* <div>{entry.status}</div> */}
                 <div>
                   <i>{entry.tags.join(" · ")}</i>
                 </div>
-                {entry.timeMinutes ? <div>{entry.timeMinutes} min</div> : null}
+                {/* {entry.timeMinutes ? <div>{entry.timeMinutes} min</div> : null} */}
               </li>
             ))}
           </ul>
@@ -139,7 +147,7 @@ export default function HomePage() {
                 <Link href={`/entries/edit/${entry.slug}`} className="card">
                   <img src="edit.png" className="edit-icon-card" />
                 </Link>
-                <div>{entry.status}</div>
+                {/* <div>{entry.status}</div> */}
                 <div>
                   <i>{entry.tags.join(" · ")}</i>
                 </div>
