@@ -1,16 +1,49 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { loadEntries } from "@/lib/content/loadEntries";
+// import { loadEntries } from "@/lib/content/loadEntries";
 
 export const dynamic = "force-dynamic";
 
-export default async function HomePage() {
-  const entries = await loadEntries();
+interface Entry {
+  type: string;
+  title: string;
+  slug: string;
+  status: string;
+  tags: string[];
+  timeMinutes?: number;
+}
 
-  const recipes = entries
+export default function HomePage() {
+  const [entries, setEntries] = useState<Entry[]>([]);
+  const [search, setSearch] = useState("");
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/entries")
+      .then((res) => res.json())
+      .then((data) => setEntries(data));
+  }, []);
+
+  const filteredEntries = entries.filter((entry) => {
+    const query = search.toLowerCase().trim();
+
+    const matchesSearch =
+      query === "" ||
+      entry.title.toLowerCase().includes(query) ||
+      entry.tags.some((tag) => tag.toLowerCase().includes(query));
+
+    const matchesFavorite = !favoritesOnly || entry.status === "favorite";
+
+    return matchesSearch && matchesFavorite;
+  });
+
+  const recipes = filteredEntries
     .filter((e) => e.type === "recipe")
     .sort((a, b) => a.title.localeCompare(b.title));
 
-  const ideas = entries
+  const ideas = filteredEntries
     .filter((e) => e.type === "idea")
     .sort((a, b) => a.title.localeCompare(b.title));
 
@@ -30,11 +63,24 @@ export default async function HomePage() {
         <Link href="/entries/new">
           <img src="BitePad.png" style={{ height: 50, padding: 5 }} />
         </Link>
-
         <input
           placeholder="Search..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
           style={{ border: "1px solid #171717", padding: 6, width: "70%" }}
         />
+
+        
+        <input
+          type="checkbox"
+          checked={favoritesOnly}
+          onChange={(e) => setFavoritesOnly(e.target.checked)}
+          className="shrink-0 size-4 bg-transparent border-line-3 rounded-sm shadow-2xs text-primary focus:ring-0 focus:ring-offset-0 checked:bg-primary-checked checked:border-primary-checked disabled:opacity-50 disabled:pointer-events-none"
+        />
+        <label>
+        <img src="favorite.png" style={{ height: 30, paddingLeft: 5 }} />
+        </label>
+ 
       </div>
 
       {/* Two columns */}
@@ -59,7 +105,7 @@ export default async function HomePage() {
                   <strong>{entry.title}</strong>
                 </Link>
                 <Link href={`/entries/edit/${entry.slug}`} className="card">
-                <img src="edit.png" className="edit-icon-card" />
+                  <img src="edit.png" className="edit-icon-card" />
                 </Link>
                 <div>{entry.status}</div>
                 <div>

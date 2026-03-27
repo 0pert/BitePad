@@ -21,6 +21,18 @@ type EntryFormProps = {
   mode: "new" | "edit";
 };
 
+const example = `## Ingredienser
+- 
+- 
+
+### Steg
+1. 
+2.
+
+### Anteckningar
+
+`
+
 export default function EntryForm({ initialData, mode }: EntryFormProps) {
   const router = useRouter();
 
@@ -36,7 +48,8 @@ export default function EntryForm({ initialData, mode }: EntryFormProps) {
     initialData?.timeMinutes ?? "",
   );
   const [cuisine, setCuisine] = useState(initialData?.cuisine ?? "");
-  const [body, setBody] = useState(initialData?.body ?? "");
+  const [body, setBody] = useState(initialData?.body ?? example);
+
   const [saving, setSaving] = useState(false);
 
   async function deleteAction() {
