@@ -167,7 +167,7 @@ export default function EntryForm({ initialData, mode }: EntryFormProps) {
           <option value="idea">idea</option>
           <option value="saved">saved</option>
           <option value="tested">tested</option>
-          <option value="favorite">not tested</option>
+          <option value="not tested">not tested</option>
         </select>
         <label>Tags</label>
         <input
