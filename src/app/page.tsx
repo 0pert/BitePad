@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { entryStatusSchema } from "../lib/content/schema";
 // import { loadEntries } from "@/lib/content/loadEntries";
 
 export const dynamic = "force-dynamic";
@@ -20,6 +21,7 @@ export default function HomePage() {
   const [entries, setEntries] = useState<Entry[]>([]);
   const [search, setSearch] = useState("");
   const [favoritesOnly, setFavoritesOnly] = useState(false);
+  const [statusFilter, setstatusFilter] = useState("all");
 
   useEffect(() => {
     fetch("/api/entries")
@@ -36,8 +38,10 @@ export default function HomePage() {
       entry.tags.some((tag) => tag.toLowerCase().includes(query));
 
     const matchesFavorite = !favoritesOnly || entry.fav;
+    const matchesStatus =
+      statusFilter === "all" || entry.status.includes(statusFilter);
 
-    return matchesSearch && matchesFavorite;
+    return matchesSearch && matchesFavorite && matchesStatus;
   });
 
   const recipes = filteredEntries
@@ -70,21 +74,38 @@ export default function HomePage() {
           onChange={(e) => setSearch(e.target.value)}
           style={{ border: "1px solid #171717", padding: 6, width: "70%" }}
         />
+        {/* <div style={{ paddingLeft: 8 }}> */}
+          <select
+            className="border border-[#171717]"
+            style={{ margin: 8, fontSize:15 }}
+            value={statusFilter}
+            onChange={(e) => setstatusFilter(e.target.value)}
+          >
+            <option key={statusFilter} value="all">
+              Show all
+            </option>
+            {entryStatusSchema.options.map((status) => (
+              <option key={status} value={status}>
+                {status}
+              </option>
+            ))}
+          </select>
 
-        <label
-          style={{ cursor: "pointer", display: "flex", alignItems: "center" }}
-        >
-          <input
-            type="checkbox"
-            checked={favoritesOnly}
-            onChange={(e) => setFavoritesOnly(e.target.checked)}
-            style={{ display: "none" }}
-          />
-          <img
-            src={favoritesOnly ? "fav-filled.png" : "fav.png"}
-            style={{ height: 30 }}
-          />
-        </label>
+          <label
+            style={{ cursor: "pointer", display: "flex", alignItems: "center" }}
+          >
+            <input
+              type="checkbox"
+              checked={favoritesOnly}
+              onChange={(e) => setFavoritesOnly(e.target.checked)}
+              style={{ display: "none" }}
+            />
+            <img
+              src={favoritesOnly ? "fav-filled.png" : "fav.png"}
+              style={{ height: 30 }}
+            />
+          </label>
+        {/* </div> */}
       </div>
 
       {/* Two columns */}

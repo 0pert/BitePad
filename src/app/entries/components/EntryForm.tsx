@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { entryStatusSchema } from "@/lib/content/schema";
 
 type Entry = {
   title?: string;
@@ -159,7 +160,7 @@ export default function EntryForm({ initialData, mode }: EntryFormProps) {
           <option value="idea">idea</option>
         </select>
         <label>Status</label>
-        <select
+        {/* <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
           className="border border-[#171717]"
@@ -168,7 +169,20 @@ export default function EntryForm({ initialData, mode }: EntryFormProps) {
           <option value="saved">saved</option>
           <option value="tested">tested</option>
           <option value="not tested">not tested</option>
+        </select> */}
+
+        <select
+          value={status}
+          className="border border-[#171717]"
+          onChange={(e) => setStatus(e.target.value)}
+        >
+          {entryStatusSchema.options.map((status) => (
+            <option key={status} value={status}>
+              {status}
+            </option>
+          ))}
         </select>
+
         <label>Tags</label>
         <input
           key={"tags"}
