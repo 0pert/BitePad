@@ -39,7 +39,7 @@ export default function HomePage() {
 
     const matchesFavorite = !favoritesOnly || entry.fav;
     const matchesStatus =
-      statusFilter === "all" || entry.status.includes(statusFilter);
+      statusFilter === "all" || entry.status == statusFilter;
 
     return matchesSearch && matchesFavorite && matchesStatus;
   });
